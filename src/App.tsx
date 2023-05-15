@@ -5,6 +5,7 @@ import { useState } from "react"
 import AddTask from "./components/AddTask"
 import Footer from "./components/Footer"
 import About from "./components/About"
+import ThemeContextWrapper from "./components/SwitchTheme"
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
@@ -38,38 +39,40 @@ const App = () => {
     )
   }
   return (
-    <Router>
-      <div className="container">
-        <Header
-          onAdd={() => setShowAddTask(!showAddTask)}
-          showAdd={showAddTask}
-        />
-
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                {showAddTask && <AddTask onAdd={addTask} />}
-                <div className="tasks">
-                  {tasks.length > 0 ? (
-                    <Tasks
-                      tasks={tasks}
-                      onDelete={deleteTask}
-                      onToggle={toggleReminder}
-                    />
-                  ) : (
-                    "No Tasks To Show"
-                  )}
-                </div>
-              </>
-            }
+    <ThemeContextWrapper>
+      <Router>
+        <div className="container">
+          <Header
+            onAdd={() => setShowAddTask(!showAddTask)}
+            showAdd={showAddTask}
           />
-          <Route path="/about" element={<About />} />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
+
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  {showAddTask && <AddTask onAdd={addTask} />}
+                  <div className="tasks">
+                    {tasks.length > 0 ? (
+                      <Tasks
+                        tasks={tasks}
+                        onDelete={deleteTask}
+                        onToggle={toggleReminder}
+                      />
+                    ) : (
+                      "No Tasks To Show"
+                    )}
+                  </div>
+                </>
+              }
+            />
+            <Route path="/about" element={<About />} />
+          </Routes>
+          <Footer />
+        </div>
+      </Router>
+    </ThemeContextWrapper>
   )
 }
 

@@ -13,8 +13,13 @@ html {
 }
 
 body {
-  background: url(../public/bg-room1.jpg);
+  background-color: #272727;
+  // background: url(../public/bg-room1.jpg);
   background-repeat: no-repeat;
+}
+
+.white-content {
+  background: #e4e4e4;
 }
 
 h1 {
@@ -29,7 +34,7 @@ h1 {
 
   padding: 30px 60px 30px 90px;
   border-radius: 5px;
-  background-image: url("../public/note.png");
+  background-image: url("/note.png");
   background-repeat: no-repeat;
   background-size: contain;
   position: relative;
