@@ -7,7 +7,7 @@ const Task = ({ task, onDelete, onToggle }: any) => {
       <h3>
         {task.text}{" "}
         <div
-          style={{ color: "red", cursor: "pointer" }}
+          style={{ color: "#f87171", cursor: "pointer" }}
           onClick={() => onDelete(task.id)}
         >
           X

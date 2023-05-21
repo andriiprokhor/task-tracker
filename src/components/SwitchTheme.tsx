@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react"
 import { ThemeContext, themes } from "./DarkTheme"
 
-export default function ThemeContextWrapper(props: any) {
+interface ThemeContextWrapperProps {
+  children: React.ReactNode
+}
+
+export default function ThemeContextWrapper(
+  props: ThemeContextWrapperProps
+): JSX.Element {
   const [theme, setTheme] = useState(themes.dark)
 
-  function changeTheme(theme: any) {
-    setTheme(theme)
+  function changeTheme() {
+    setTheme((prevTheme) =>
+      prevTheme === themes.light ? themes.dark : themes.light
+    )
   }
 
   useEffect(() => {
@@ -16,6 +24,18 @@ export default function ThemeContextWrapper(props: any) {
       case themes.dark:
       default:
         document.body.classList.add("white-content")
+    }
+
+    return () => {
+      // Cleanup logic (remove added classes) if necessary
+      switch (theme) {
+        case themes.light:
+          document.body.classList.remove("white-content")
+          break
+        case themes.dark:
+        default:
+          document.body.classList.remove("white-content")
+      }
     }
   }, [theme])
 

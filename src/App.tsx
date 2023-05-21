@@ -7,44 +7,49 @@ import Footer from "./components/Footer"
 import About from "./components/About"
 import ThemeContextWrapper from "./components/SwitchTheme"
 
-const App = () => {
-  const [showAddTask, setShowAddTask] = useState(false)
-  const [tasks, setTasks] = useState<any[]>([])
+interface Task {
+  id: number
+  text: string
+  day: string
+  reminder: boolean
+}
+
+const App = (): JSX.Element => {
+  const [showAddTask, setShowAddTask] = useState<boolean>(false)
+  const [tasks, setTasks] = useState<Task[]>([])
 
   // Message when tasks > 3
 
   // Add Task
-
-  const addTask = (task: any) => {
-    // if (tasks.length < 3) {
+  const addTask = (task: Task): void => {
     const id = Math.floor(Math.random() * 10000) + 1
-    const newTask = { id, ...task }
+    const newTask: Task = { ...task, id }
     setTasks([...tasks, newTask])
-    // } else {
-    //   alert("There are 3 tasks!")
-    // }
   }
 
   // Delete Task
-  const deleteTask = (id: any) => {
-    setTasks(tasks.filter((task: any) => task.id !== id))
+  const deleteTask = (id: number): void => {
+    setTasks(tasks.filter((task) => task.id !== id))
   }
 
   // Toggle Reminder
-  const toggleReminder = (id: any) => {
+  const toggleReminder = (id: number): void => {
     setTasks(
-      tasks.map((task: any) =>
+      tasks.map((task) =>
         task.id === id ? { ...task, reminder: !task.reminder } : task
       )
     )
   }
+
   return (
     <ThemeContextWrapper>
       <Router>
+        <div className="main-header">Task Tracker</div>
         <div className="container">
           <Header
             onAdd={() => setShowAddTask(!showAddTask)}
             showAdd={showAddTask}
+            title={tasks.length > 0 ? "Add task:" : "Add first task:"}
           />
 
           <Routes>
